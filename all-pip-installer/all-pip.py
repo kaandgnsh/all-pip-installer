@@ -1,330 +1,160 @@
 #!/usr/bin/env python3
-#*- coding: utf-8 -*--
-#Coded by Morbius.os
+"""Install a curated set of common third-party Python packages."""
 
-AUTHOR = 'Morbius.os'
-GİTHUB = 'https://github.com/morbius-os'
-INSTAGRAM= '@morbius.os'
+from __future__ import annotations
 
-import os
-import time
+import argparse
+import re
+import subprocess
 import sys
-
-Mor = '\033[95m'
-Cyan = '\033[96m'
-KoyuMavi = '\033[1;34m'
-Mavi = '\033[94m'
-Yeşil = '\033[92m'
-Sarı = '\033[93m'
-Kırmızı = '\033[91m'
-Kalın = '\033[1m'
-AltıÇizili = '\033[4m'
-Bitir = '\033[0m'
-Beyaz ='\033[1;37m'
+from collections.abc import Callable, Sequence
+from typing import TextIO
 
 
-def animasyon(yazi):
-     for u in yazi + '\n' :
-         sys.stdout.write(u)
-         sys.stdout.flush()
-         time.sleep(10. / 100)
-         
-animasyon(f'''{Beyaz}Bu Script {Yeşil}Morbius.os{Beyaz} Tarafından Yazılmıştır.
-Bütün Python Kütüphanelerini Otomatik Olarak Cihazınıza Yükler.
-İşlem Biraz Zaman Alabilir.{Beyaz}''')
-time.sleep(2)
+PROFILE_PACKAGES: dict[str, tuple[str, ...]] = {
+    "basic": ("requests", "colorama", "rich"),
+    "web": ("requests", "beautifulsoup4"),
+    "scraping": ("requests", "beautifulsoup4", "mechanize"),
+    "terminal": ("colorama", "pyfiglet", "rich"),
+    "all": (
+        "beautifulsoup4",
+        "colorama",
+        "mechanize",
+        "pyfiglet",
+        "requests",
+        "rich",
+    ),
+}
 
-os.system('pip install mechanize')
-print(f"{Yeşil}mechanize{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install requests')
-print(f"{Yeşil} requests{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install pyfiglet')
-print(f"{Yeşil}pyfiglet{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install sys')
-print(f"{Yeşil}sys{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install py_compile')
-print(f"{Yeşil}py_compile{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install youtube_dl')
-print(f"{Yeşil}youtube_dl{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install uuid')
-print(f"{Yeşil}uuid{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install time')
-print(f"{Yeşil}time{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install os')
-print(f"{Yeşil}os{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install random')
-print(f"{Yeşil}random{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install datetime')
-print(f"{Yeşil}datetime{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install string')
-print(f"{Yeşil}string{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install secrets')
-print(f"{Yeşil}secrets{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install webbrowser')
-print(f"{Yeşil}webbrowser{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install hashlib')
-print(f"{Yeşil}hashlib{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install colorama')
-print(f"{Yeşil}colorama{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install n')
-print(f"{Yeşil}n{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install mm')
-print(f"{Yeşil}mm{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install new')
-print(f"{Yeşil}new{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install sleep')
-print(f"{Yeşil}sleep{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install BeautifulSoup')
-print(f"{Yeşil}BeautifulSoup{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install new')
-print(f"{Yeşil}new{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install pafy')
-print(f"{Yeşil}pafy{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install bs4')
-print(f"{Yeşil}bs4{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install sys')
-print(f"{Yeşil}sys{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install json')
-print(f"{Yeşil}json{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install threading')
-print(f"{Yeşil}threading{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install render')
-print(f"{Yeşil}render{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install cfonts')
-print(f"{Yeşil}cfonts{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install random')
-print(f"{Yeşil}random{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install uuid')
-print(f"{Yeşil}uuid{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install secrets')
-print(f"{Yeşil}secrets{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install datetime')
-print(f"{Yeşil}datetime{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install *')
-print(f"{Yeşil}*{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install argparse')
-print(f"{Yeşil}argprase{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install InstagramAPI')
-print(f"{Yeşil}InstagramAPI{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install sleep')
-print(f"{Yeşil}sleep{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install string')
-print(f"{Yeşil}string{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install uuid4')
-print(f"{Yeşil}uuid4{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install generate_user_agent')
-print(f"{Yeşil}generate_user_agent{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install threading')
-print(f"{Yeşil}threading{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install json')
-print(f"{Yeşil}json{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install datetime')
-print(f"{Yeşil}datetime{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install token_hex')
-print(f"{Yeşil}token_hex{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install secrets')
-print(f"{Yeşil}secrets{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install Fore')
-print(f"{Yeşil}Fore{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-os.system('pip install re')
-try:
-    os.system('clear')
-except:
-    os.system('cls')
-print(f"{Yeşil}re{Beyaz} Kütüphanesi Yüklendi.")
-os.system('pip install b')
-print(f"{Yeşil}b{Beyaz} Kütüphanesi Yüklendi.")
-try:
-    os.system('clear')
-except:
-    os.system('cls')
+PACKAGE_NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
-print(f"{Yeşil}Kütüphaneler Cihazınıza Yüklenmiştir.")
+
+def select_packages(profile: str, extra_packages: Sequence[str] = ()) -> tuple[str, ...]:
+    """Return a validated, de-duplicated package list for a named profile."""
+    if profile not in PROFILE_PACKAGES:
+        raise ValueError(f"Unknown profile: {profile}")
+
+    selected = list(PROFILE_PACKAGES[profile])
+    for package in extra_packages:
+        if not PACKAGE_NAME_PATTERN.fullmatch(package):
+            raise ValueError(
+                f"Invalid package name {package!r}. Use a plain PyPI package name "
+                "without shell syntax, URLs, or version specifiers."
+            )
+        selected.append(package)
+
+    return tuple(dict.fromkeys(selected))
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Preview a curated Python package profile. Installation is opt-in "
+            "and requires the --install flag."
+        )
+    )
+    parser.add_argument(
+        "--profile",
+        choices=tuple(PROFILE_PACKAGES),
+        default="basic",
+        help="Package profile to use (default: basic).",
+    )
+    parser.add_argument(
+        "--package",
+        action="append",
+        default=[],
+        metavar="NAME",
+        help="Add a plain PyPI package name; may be supplied more than once.",
+    )
+    parser.add_argument(
+        "--list",
+        dest="list_profiles",
+        action="store_true",
+        help="List available profiles and their packages, then exit.",
+    )
+    parser.add_argument(
+        "--install",
+        action="store_true",
+        help="Run pip install after displaying the package list and confirming.",
+    )
+    parser.add_argument(
+        "--yes",
+        action="store_true",
+        help="Skip the confirmation prompt (requires --install).",
+    )
+    return parser
+
+
+def print_profiles(stream: TextIO) -> None:
+    print("Available package profiles:", file=stream)
+    for name, packages in PROFILE_PACKAGES.items():
+        print(f"  {name:<10} {', '.join(packages)}", file=stream)
+
+
+def main(
+    argv: Sequence[str] | None = None,
+    *,
+    run: Callable[..., object] = subprocess.run,
+    input_fn: Callable[[str], str] = input,
+    output: TextIO | None = None,
+) -> int:
+    """Run the CLI; injected I/O functions make behavior straightforward to test."""
+    stream = sys.stdout if output is None else output
+    parser = build_parser()
+    args = parser.parse_args(argv)
+
+    if args.yes and not args.install:
+        parser.error("--yes can only be used together with --install.")
+
+    if args.list_profiles:
+        print_profiles(stream)
+        return 0
+
+    try:
+        packages = select_packages(args.profile, args.package)
+    except ValueError as exc:
+        parser.error(str(exc))
+
+    print(f"Python interpreter: {sys.executable}", file=stream)
+    print(f"Selected packages ({len(packages)}): {', '.join(packages)}", file=stream)
+    print(
+        "Use a virtual environment when possible. This tool does not create one "
+        "or change the selected interpreter.",
+        file=stream,
+    )
+
+    if not args.install:
+        print("Dry run only; no packages were installed. Add --install to continue.", file=stream)
+        return 0
+
+    if not args.yes:
+        try:
+            answer = input_fn("Install the packages shown above? [y/N] ")
+        except EOFError:
+            print("No confirmation received; installation cancelled.", file=stream)
+            return 1
+
+        if answer.strip().lower() not in {"y", "yes"}:
+            print("Installation cancelled; no changes were made.", file=stream)
+            return 0
+
+    command = [sys.executable, "-m", "pip", "install", *packages]
+    print(f"Running pip for {len(packages)} selected package(s)...", file=stream)
+
+    try:
+        result = run(command, check=False)
+    except OSError as exc:
+        print(f"Could not start pip: {exc}", file=stream)
+        return 1
+
+    return_code = getattr(result, "returncode", 1)
+    if return_code == 0:
+        print("Package installation completed.", file=stream)
+        return 0
+
+    print(f"pip exited with status {return_code}.", file=stream)
+    return return_code if isinstance(return_code, int) and return_code > 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

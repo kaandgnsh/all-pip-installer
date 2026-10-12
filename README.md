@@ -1,219 +1,149 @@
-"all-pip-installer"
+# All PIP Installer
 
-«Lightweight Python automation for installing a predefined package set.»
-```
-┌──[ kaan@lab ]─[ ~/all-pip-installer ]            
-└─$ system.status
-```
-package automation    [ online ]
-configuration         [ ready  ]
-runtime               [ python ]
+<p align="center">
+  <strong>A small, opt-in CLI for installing a curated set of common Python packages.</strong>
+</p>
 
-"about"
-
-"all-pip-installer" is a small Python utility created to simplify repetitive package installation.
-
-It handles a predefined collection of Python packages through a single script, making basic environment setup faster and easier to repeat.
-
-The project intentionally keeps its implementation simple and easy to modify.
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/Dependencies-Standard%20Library-444444?style=for-the-badge" alt="Standard library only">
+  <a href="https://github.com/kaandgnsh/all-pip-installer/actions/workflows/tests.yml">
+    <img src="https://github.com/kaandgnsh/all-pip-installer/actions/workflows/tests.yml/badge.svg?branch=main" alt="GitHub Actions">
+  </a>
+</p>
 
 ---
 
-"features"
+## Overview
 
-01  automated installation
-02  single-script workflow
-03  lightweight implementation
-04  editable package collection
-05  minimal configuration
+**All PIP Installer** streamlines the setup of a small, predefined collection of third-party Python packages. It uses the active Python interpreter to invoke `pip`, supports a few practical package profiles, and lets you add package names when needed.
 
+> **Important:** This tool does not and cannot install every package on PyPI. It installs only the packages in the selected profile and any additional package names you provide. The default mode is a dry run. No installation occurs unless you pass `--install` and confirm.
 
----
-```
-"structure"
+## Features
 
-all-pip-installer/      
-    └── all-pip-installer/  
-        └── all-pip.py
+- **Safe by default:** previews the selected packages without installing them.
+- **Explicit confirmation:** requires `--install` and a confirmation prompt before modifying the environment.
+- **Curated profiles:** choose basic, web, scraping, terminal, or all listed packages.
+- **Extra package names:** add trusted PyPI package names one at a time.
+- **Interpreter-aware:** runs `python -m pip` using the current interpreter.
+- **No runtime dependencies:** the installer itself uses the Python standard library.
+- **Tested CLI:** unit tests run in GitHub Actions on Python 3.10, 3.11, and 3.12.
 
+## Requirements
 
-```
----
+- Python 3.10 or newer
+- `pip` available for the selected Python interpreter
+- Internet access to download packages
 
-"concept"
+Verify your environment:
 
-The idea behind the project is straightforward:
-
-define the packages once → run the installer → prepare the environment.
-
-No unnecessary framework or complex configuration.
-
-Just a small automation utility for a repetitive task.
-
-
----
-
-"roadmap"
-
-[ ] package validation
-[ ] improved error handling
-[ ] configurable package lists
-[ ] installation status reporting
-[ ] virtual environment support
-[ ] dependency management improvements
-
-
----
-
-<div align="center">"python" · "automation" · "tooling"  <br>Kaan Doğan
-
-</div>  
-</div>  
-python3 all-pip.py  The terminal displays the progress while the installation process is running.
-
-«Note: Package installation requires a working Python environment and "pip".»
-
-
----
-
-Project Structure
-```
-all-pip-installer/  
-├── all-pip-installer/  
-│   └── all-pip.py  
-├── .gitignore  
-└── README.md
-```
-
----
-
-Requirements
-
-Python 3.x
-
-"pip"
-
-Internet connection
-
-Permission to install Python packages
-
-
-You can verify your Python and pip installation with:
-
+```bash
 python3 --version
 python3 -m pip --version
-
-
----
-
-Why?
-
-The project started as a simple solution to a common problem:
-
-«Why manually install the same packages one by one when a script can handle it?»
-
-Instead of repeatedly running:
-
-pip install package_a
-pip install package_b
-pip install package_c
-
-the installer handles the configured installation sequence from one command.
-
-
----
-
-Limitations
-
-This project intentionally keeps the implementation simple.
-
-<div align="center">"all-pip-installer"  A small utility for automated Python package installation.
-
-<br>"[ automation ]" · "[ python ]" · "[ tooling ]"
-
-</div>---
-
 ```
-┌──[ kaan@lab ]─[ ~/all-pip-installer ]  
-└─$ status
+
+A virtual environment is recommended to avoid changing packages in a system-managed Python installation.
+
+## Quick Start
+
+Clone the repository:
+
+```bash
+git clone https://github.com/kaandgnsh/all-pip-installer.git
+cd all-pip-installer
 ```
-package automation ............. online
-configuration ................. simple
-dependencies .................. python
-complexity .................... low
 
-"~/about"
+List the profiles:
 
-"all-pip-installer" is a lightweight Python utility designed to automate the installation of a predefined collection of packages.
-
-The idea is simple:
-
-one script → multiple packages → less repetitive setup.
-
-It is intentionally kept small and easy to modify, making it useful for quickly preparing a Python environment with a known package set.
-
-
----
-
-"~/features"
-
-┌──────────────────────────────────────────────┐  
-│                                              │  
-│  01  automated package installation         │  
-│  02  single-script workflow                  │  
-│  03  lightweight implementation              │  
-│  04  editable package collection             │  
-│  05  minimal configuration                   │  
-│                                              │  
-└──────────────────────────────────────────────┘
-
-
----
-
-"~/structure"
+```bash
+python3 all-pip-installer/all-pip.py --list
 ```
-all-pip-installer/  
-│  
-├── all-pip-installer/  
-│   └── all-pip.py  
-│  
-├── .gitignore  
+
+Preview the default profile. This command makes no changes:
+
+```bash
+python3 all-pip-installer/all-pip.py
+```
+
+Install a profile after reviewing the package list:
+
+```bash
+python3 all-pip-installer/all-pip.py --profile web --install
+```
+
+The installer asks for confirmation by default. To skip that prompt explicitly:
+
+```bash
+python3 all-pip-installer/all-pip.py --profile terminal --install --yes
+```
+
+## Package Profiles
+
+| Profile | Packages |
+|:--|:--|
+| `basic` | `requests`, `colorama`, `rich` |
+| `web` | `requests`, `beautifulsoup4` |
+| `scraping` | `requests`, `beautifulsoup4`, `mechanize` |
+| `terminal` | `colorama`, `pyfiglet`, `rich` |
+| `all` | Every package in the curated profiles above |
+
+Add extra package names with repeated `--package` flags:
+
+```bash
+python3 all-pip-installer/all-pip.py --profile basic --package pytest --package packaging
+```
+
+This remains a dry run. Add `--install` when you are ready to proceed. Package names are treated as plain PyPI names; URLs, shell commands, and version specifiers are not accepted.
+
+## CLI Reference
+
+| Option | Description |
+|:--|:--|
+| `--profile NAME` | Select `basic`, `web`, `scraping`, `terminal`, or `all`. Default: `basic`. |
+| `--package NAME` | Add a package name. May be repeated. |
+| `--list` | Print all profiles and their package lists. |
+| `--install` | Proceed to the installation confirmation. Without it, the command only previews the plan. |
+| `--yes` | Skip confirmation; valid only with `--install`. |
+| `-h, --help` | Show help. |
+
+## Safety Notes
+
+- Read the package list before approving an installation.
+- Install packages only from projects and maintainers you trust; third-party packages execute code in your Python environment.
+- Prefer a virtual environment for project-specific dependencies.
+- The script uses the active interpreter's `sys.executable -m pip`; it does not create a virtual environment or elevate privileges.
+- A successful pip exit code confirms the command completed, not that every installed package is safe or suitable for your project.
+
+## Tests
+
+Run the unit tests from the repository root:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+The test suite checks profile selection, de-duplication, dry-run behavior, confirmation, invalid package names, and pip error handling.
+
+## Project Structure
+
+```text
+all-pip-installer/
+├── .github/
+│   └── workflows/
+│       └── tests.yml
+├── all-pip-installer/
+│   └── all-pip.py
+├── tests/
+│   └── test_installer.py
+├── .gitignore
 └── README.md
 ```
 
----
+## Author
 
-"~/concept"
+**Kaan DOĞAN** · [GitHub](https://github.com/kaandgnsh) · [LinkedIn](https://www.linkedin.com/in/kaan-do%C4%9Fan-911663280/) · [Instagram](https://instagram.com/kaandgn.sh)
 
-The project was built around a simple problem:
-
-«Reinstalling the same collection of Python packages shouldn't require repeating the same commands every time.»
-
-Instead, the required package collection is handled by a single Python script.
-
-No unnecessary framework.
-
-No complicated configuration.
-
-Just a small piece of automation.
-
-
----
-
-"~/roadmap"
-
-[ ] package validation
-[ ] improved error handling
-[ ] configurable package lists
-[ ] installation status reporting
-[ ] virtual environment support
-[ ] dependency management improvements
-
-
----
-
-
-Kaan Doğan
-
-</div> 
+<p align="center">
+  <sub>Small automation. Explicit consent. No unnecessary installs.</sub>
+</p>
